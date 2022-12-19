@@ -3,6 +3,10 @@
 ## mojracun.hep.hr
 
 Trenutno je napravljena skripta `hep.py` koja učitava `json` file koji se dobije sa hepove stranice *mojracun*.
+Skripta računa koliko je novaca potrošeno na struju u jednom mjesecu.
+Obračuni se ubrajaju na sve mjesece podjednako od prošlog obračuna.
+
+U skripti je potrebno podesiti varijablu `CURRENT_DEBT` koja označava trenutno zaduženje koje je napisano na stranici i varijablu `FIRST_MONTH` koja označava najraniji mjesec koji se pojavljuje u podacima (`day` argument `date` objektu mora biti `1`).
 
 Json file se može skupiti sljedećim koracima:
 

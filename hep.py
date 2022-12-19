@@ -4,15 +4,18 @@ from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from itertools import count
 
-# from pprint import pprint
+
+FIRST_MONTH = date(year=2019, month=10, day=1)
+CURRENT_DEBT = 189.61
+
 
 with open("hep.json") as f:
     data = json.loads(f.read().strip())
 
 akontacija = 0
 uplaceno = 0
-racun = -148.78  # početni dug 2019.
-last_calc_date = date(year=2019, month=10, day=1)
+racun = 0
+last_calc_date = FIRST_MONTH
 month_amounts = defaultdict(int)
 for line in reversed(data["promet_lista"]):
     year, month, day = map(int, line["Datum"][:10].split("-"))
@@ -38,11 +41,11 @@ for line in reversed(data["promet_lista"]):
 
             racun += round(line["Duguje"], 2)
 
-first_date = date(year=2019, month=10, day=1)
+first_date = FIRST_MONTH
+initial_debt = round(racun + akontacija - uplaceno - CURRENT_DEBT, 2)
+month_amounts[first_date] += initial_debt
+
 
 while month_amounts:
     print(f"{first_date}: {round(month_amounts.pop(first_date), 2)}")
     first_date += relativedelta(months=1)
-
-dug = round(racun + akontacija - uplaceno, 2)
-print(f"{dug=}")
